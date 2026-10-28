@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`
+
 const contactLinks = [
   { label: 'Email', href: 'mailto:sabrinawong0903@gmail.com' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sabrina-wong-' },
@@ -11,7 +13,7 @@ function ContactIcon({ name }) {
   return (
     <svg className="contact-icon" viewBox={name === 'GitHub' ? '0 0 19 19' : '0 0 24 24'} aria-hidden="true" focusable="false">
       {name === 'GitHub' ? (
-        <use href="/icons.svg#github-icon" />
+        <use href={`${assetUrl('icons.svg')}#github-icon`} />
       ) : name === 'LinkedIn' ? (
         <path fill="currentColor" fillRule="evenodd" d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm2 8v8h3v-8H6Zm1.5-5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM11 10v8h3v-4.5c0-2 3-2 3 0V18h3v-5c0-4-4.5-4-6-2.5V10h-3Z" />
       ) : (
@@ -172,7 +174,7 @@ function App() {
               <a className="button button-primary" href="#work">
                 Explore my work 
               </a>
-              <a className="text-link" href="/sabrina-wong-resume.pdf" download>
+              <a className="text-link" href={assetUrl('sabrina-wong-resume.pdf')} download>
                 Download resume 
               </a>
             </div>
@@ -184,7 +186,7 @@ function App() {
               <span className="byu-badge-mark">BYU</span>
               <span>Marriott School<br />of Business</span>
             </div>
-            <img className="profile-photo" src="/sabrina-linkedin.jpg" alt="Professional portrait of Sabrina Wong" />
+            <img className="profile-photo" src={assetUrl('sabrina-linkedin.jpg')} alt="Professional portrait of Sabrina Wong" />
             <p className="card-eyebrow">A LITTLE CURIOSITY GOES A LONG WAY</p>
             <h2>Understand the people.<br />Then build the solution.</h2>
             <p>
@@ -414,7 +416,7 @@ function App() {
         <section id="about" className="section-width content-section about-layout">
           <div className="about-gallery" aria-label="A glimpse of Sabrina's life outside work">
             <figure className="about-photo about-photo-primary">
-              <img src="/engagement.png" alt="Sabrina and her husband outdoors with mountains behind them" />
+              <img src={assetUrl('engagement.png')} alt="Sabrina and her husband outdoors with mountains behind them" />
               <figcaption>Life outside the screen</figcaption>
             </figure>
           </div>
