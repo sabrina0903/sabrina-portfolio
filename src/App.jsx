@@ -1,6 +1,48 @@
 import { useState } from 'react'
 import './App.css'
 
+const contactLinks = [
+  { label: 'Email', href: 'mailto:sabrinawong0903@gmail.com' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sabrina-wong-' },
+  { label: 'GitHub', href: 'https://github.com/sabrina0903' },
+]
+
+function ContactIcon({ name }) {
+  return (
+    <svg className="contact-icon" viewBox={name === 'GitHub' ? '0 0 19 19' : '0 0 24 24'} aria-hidden="true" focusable="false">
+      {name === 'GitHub' ? (
+        <use href="/icons.svg#github-icon" />
+      ) : name === 'LinkedIn' ? (
+        <path fill="currentColor" fillRule="evenodd" d="M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm2 8v8h3v-8H6Zm1.5-5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM11 10v8h3v-4.5c0-2 3-2 3 0V18h3v-5c0-4-4.5-4-6-2.5V10h-3Z" />
+      ) : (
+        <g fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="3" />
+          <path d="m3 6 9 7 9-7" />
+        </g>
+      )}
+    </svg>
+  )
+}
+
+function ContactLinks({ className }) {
+  return (
+    <nav className={className} aria-label="Contact Sabrina">
+      {contactLinks.map(({ label, href }) => (
+        <a
+          className="text-link"
+          key={label}
+          href={href}
+          {...(href.startsWith('https:') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          <ContactIcon name={label} />
+          {label}
+          {href.startsWith('https:') && <span className="sr-only"> (opens in a new tab)</span>}
+        </a>
+      ))}
+    </nav>
+  )
+}
+
 const projects = [
   {
     number: '01',
@@ -79,18 +121,21 @@ const experience = [
 ]
 
 const skills = [
-  { title: 'Data & analysis', tools: 'Python, SQL, data visualization, AI-assisted analysis, prompt engineering' },
-  { title: 'Design & content', tools: 'Figma, Brightspot CMS, website content organization' },
-  { title: 'Technology & support', tools: 'Linux, IT infrastructure, Microsoft 365, quality assurance' },
+  { title: 'People & collaboration', tools: 'Mentoring, empathy, clear communication, teaching, relationship building', detail: 'I enjoy helping people feel comfortable asking questions, then turning those questions into clear next steps. That shows up in my teaching, technical support, and community work.' },
+  { title: 'Product & design', tools: 'User research, product strategy, Figma, Brightspot CMS, content organization', detail: 'I listen for what people actually need and organize ideas into experiences that feel simpler, clearer, and more useful.' },
+  { title: 'Technical problem solving', tools: 'Python, SQL, Linux, IT infrastructure, quality assurance, troubleshooting', detail: 'I bring curiosity and patience to technical problems, whether I am testing a workflow, troubleshooting a system, or helping a student understand a new tool.' },
 ]
+
+const currentYear = new Date().getFullYear()
 
 function App() {
   const [activeProject, setActiveProject] = useState(null)
+  const [activeStrength, setActiveStrength] = useState(0)
 
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <header className="site-header">
+      <header id="top" className="site-header">
         <a className="wordmark" href="#home" aria-label="Sabrina Wong home">
           sabrina<span>.</span>
         </a>
@@ -112,15 +157,16 @@ function App() {
           <div className="hero-copy">
             <p className="eyebrow">SABRINA WONG · PROVO, UTAH</p>
             <h1 id="hero-title">
-              People first.
+              Product thinking.
               <br />
-              <span>Thoughtful technology.</span>
+              <span>People-first technology.</span>
             </h1>
             <p className="hero-description">
               I’m a Master of Information Systems Management student at BYU,
-              interested in product management and building digital
-              experiences that make life a little easier.
+              interested in exploring thoughtful work across technology,
+              design, systems, and experiences that make life a little easier.
             </p>
+            <p className="hero-seeking">Open to opportunities where I can learn, contribute, solve meaningful problems, and help people through technology.</p>
 
             <div className="hero-actions">
               <a className="button button-primary" href="#work">
@@ -130,10 +176,15 @@ function App() {
                 Download resume 
               </a>
             </div>
+            <ContactLinks className="hero-contact-links" />
           </div>
 
           <aside className="intro-card" aria-label="My approach">
-            <div className="monogram" aria-hidden="true">sw.</div>
+            <div className="byu-badge" aria-label="Brigham Young University Marriott School of Business">
+              <span className="byu-badge-mark">BYU</span>
+              <span>Marriott School<br />of Business</span>
+            </div>
+            <img className="profile-photo" src="/sabrina-linkedin.jpg" alt="Professional portrait of Sabrina Wong" />
             <p className="card-eyebrow">A LITTLE CURIOSITY GOES A LONG WAY</p>
             <h2>Understand the people.<br />Then build the solution.</h2>
             <p>
@@ -193,6 +244,10 @@ function App() {
                   <dt>The experience</dt>
                   <dd>Visitors can browse equipment, accessories, and clothing, learn about Hunter, and find camp and contact information.</dd>
                 </div>
+                <div>
+                  <dt>The result</dt>
+                  <dd>Created a focused online home for the brand, combining product discovery, apparel shopping, and training information in one experience.</dd>
+                </div>
                 </dl>
               </details>
               <ul className="tags featured-tags" aria-label="Project focus">
@@ -228,6 +283,10 @@ function App() {
                 <div>
                   <dt>Behind the storefront</dt>
                   <dd>Wrote a Node.js and Express backend with inventory checks and a checkout endpoint to process orders and update stock.</dd>
+                </div>
+                <div>
+                  <dt>The result</dt>
+                  <dd>Turned a social-media idea into a working storefront with product browsing, cart management, inventory checks, and checkout support.</dd>
                 </div>
                 </dl>
               </details>
@@ -331,11 +390,17 @@ function App() {
                 quality assurance, and teaching. Across each role, I enjoy making complicated
                 things easier to understand.
               </p>
+            <aside className="current-role" aria-label="Current teaching assistant role">
+              <p className="eyebrow">CURRENT ROLE</p>
+              <h3>Helping students succeed</h3>
+              <p>As an IT Infrastructure Teaching Assistant at BYU, I mentor students through Linux and deployment labs, answer questions, and help them build confidence through hands-on problem solving.</p>
+              <span className="current-role-tag">IT Infrastructure TA · BYU IS 404</span>
+            </aside>
             </div>
 
             <div className="experience-list">
               {experience.map((item) => (
-                <article className="experience-item" key={item.role}>
+                <article className={`experience-item${item.role.includes('Teaching Assistant') ? ' experience-item-featured' : ''}`} key={item.role}>
                   <p className="experience-date">{item.date}</p>
                   <h3>{item.role}</h3>
                   <p className="organization">{item.organization}</p>
@@ -347,6 +412,12 @@ function App() {
         </section>
 
         <section id="about" className="section-width content-section about-layout">
+          <div className="about-gallery" aria-label="A glimpse of Sabrina's life outside work">
+            <figure className="about-photo about-photo-primary">
+              <img src="/engagement.png" alt="Sabrina and her husband outdoors with mountains behind them" />
+              <figcaption>Life outside the screen</figcaption>
+            </figure>
+          </div>
           <div className="about-note">
             <span className="note-star" aria-hidden="true">✳</span>
             <p>A technical mind.<br />A creative side.<br />A people person.</p>
@@ -382,15 +453,33 @@ function App() {
         </section>
 
         <section className="section-width skills-section" aria-labelledby="skills-heading">
-          <p className="eyebrow">TECHNICAL SKILLS</p>
-          <h2 id="skills-heading">Tools I bring to the work.</h2>
+          <p className="eyebrow">STRENGTHS &amp; SKILLS</p>
+          <h2 id="skills-heading">What I bring to the work.</h2>
           <div className="skills-grid">
-            {skills.map((skill) => (
-              <div className="skill-group" key={skill.title}>
-                <h3>{skill.title}</h3>
-                <p>{skill.tools}</p>
-              </div>
-            ))}
+            {skills.map((skill, index) => {
+              const isActive = activeStrength === index
+
+              return (
+              <article className={`skill-group${isActive ? ' skill-group-active' : ''}`} key={skill.title}>
+                <button
+                  className="skill-button"
+                  type="button"
+                  aria-expanded={isActive}
+                  aria-controls={`strength-detail-${index}`}
+                  onClick={() => setActiveStrength(isActive ? null : index)}
+                >
+                  <span className="skill-index">0{index + 1}</span>
+                  <span>
+                    <strong>{skill.title}</strong>
+                    <small>{skill.tools}</small>
+                  </span>
+                  <span className="skill-plus" aria-hidden="true">{isActive ? '−' : '+'}</span>
+                </button>
+                <div className="skill-detail" id={`strength-detail-${index}`} hidden={!isActive}>
+                  {skill.detail}
+                </div>
+              </article>
+            )})}
           </div>
         </section>
 
@@ -399,13 +488,13 @@ function App() {
             <p className="eyebrow">LET’S CONNECT</p>
             <h2>Good things start<br />with a conversation.</h2>
             <p>
-              I’d love to connect about product, technology,
+              I’d love to connect about technology, creative problem solving,
               and opportunities to learn and contribute.
             </p>
             <div className="contact-actions">
-              <a className="button button-primary" href="mailto:sabrinawong0903@gmail.com">Email me </a>
-              <a className="button button-secondary" href="https://www.linkedin.com/in/sabrina-wong-" target="_blank" rel="noopener noreferrer">LinkedIn <span className="sr-only">(opens in a new tab)</span></a>
-              <a className="button button-secondary" href="https://github.com/sabrina0903" target="_blank" rel="noopener noreferrer">GitHub <span className="sr-only">(opens in a new tab)</span></a>
+              <a className="button button-primary" href="mailto:sabrinawong0903@gmail.com"><ContactIcon name="Email" />Email me </a>
+              <a className="button button-secondary" href="https://www.linkedin.com/in/sabrina-wong-" target="_blank" rel="noopener noreferrer"><ContactIcon name="LinkedIn" />LinkedIn <span className="sr-only">(opens in a new tab)</span></a>
+              <a className="button button-secondary" href="https://github.com/sabrina0903" target="_blank" rel="noopener noreferrer"><ContactIcon name="GitHub" />GitHub <span className="sr-only">(opens in a new tab)</span></a>
             </div>
             <a className="contact-email" href="mailto:sabrinawong0903@gmail.com">sabrinawong0903@gmail.com</a>
           </div>
@@ -414,8 +503,20 @@ function App() {
 
       <footer className="section-width site-footer">
         <a className="wordmark" href="#home">sabrina<span>.</span></a>
-        <p>© {new Date().getFullYear()} Sabrina Wong</p>
-        <a href="#home">Back to top</a>
+        <p>© {currentYear} Sabrina Wong</p>
+        <ContactLinks className="footer-contact-links" />
+        <a
+          className="back-to-top"
+          href="#top"
+          aria-label="Back to the top of the page"
+          onClick={(event) => {
+            event.preventDefault()
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
+          <span aria-hidden="true">↑</span>
+          Back to top
+        </a>
       </footer>
     </>
   )
